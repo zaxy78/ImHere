@@ -1,0 +1,66 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="DonorNameColumn" DataType="DataGridCell">
+        <StackPanel Orientation="Horizontal">
+            <Label Margin="0,0,2,0" Content="{Binding Donor.FirstName}" Width="auto"/>
+            <Label Margin="0,0,10,0" Content="{Binding Donor.LastName}" Width="auto"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AuthorNameColumn" DataType="DataGridCell">
+        <StackPanel Orientation="Horizontal">
+            <Label Margin="0,0,2,0" Content="{Binding Author.FirstName}" Width="auto"/>
+            <Label Margin="0,0,10,0" Content="{Binding Author.LastName}" Width="auto"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- ButtonBack -->
+    <DataTemplate x:Key="TemplateButtonBack">
+        <Grid>
+            <Ellipse x:Name="BorderBtn"
+      Height="80"
+      Width="80"
+      Fill="Transparent"
+      UseLayoutRounding="true" />
+            <Path x:Name="PathBack"
+      Data="F1M19.088,13.016C19.088,13.016 24.926,13.016 24.926,13.016 24.926,13.016 25.252,13.342 25.252,13.342 25.252,13.342 18.595,19.998 18.595,19.998 18.595,19.998 33.96,19.998 33.96,19.998 33.96,19.998 33.96,24.016 33.96,24.016 33.96,24.016 18.48,24.016 18.48,24.016 18.48,24.016 25.256,30.792 25.256,30.792 25.256,30.792 25.033,31.015 25.033,31.015 25.033,31.015 18.99,31.015 18.99,31.015 18.99,31.015 10.384,22.409 10.384,22.409 10.384,22.409 10.724,22.069 10.724,22.069 10.724,22.069 10.38,21.725 10.38,21.725 10.38,21.725 19.088,13.016 19.088,13.016z M21.985,3.035C11.52,3.035 3.036,11.519 3.036,21.984 3.036,32.449 11.52,40.933 21.985,40.933 32.45,40.933 40.934,32.449 40.934,21.984 40.934,11.519 32.45,3.035 21.985,3.035z M21.985,1.017C33.565,1.017 42.952,10.404 42.952,21.984 42.952,33.564 33.565,42.951 21.985,42.951 10.406,42.951 1.018,33.564 1.018,21.984 1.018,10.404 10.406,1.017 21.985,1.017z"
+      Fill="{StaticResource BrushImHereGreen}"
+      Height="80"
+      Width="80"  />
+        </Grid>
+    </DataTemplate>
+    <!-- End ButtonBack -->
+
+    <!-- Error Validation -->
+    <ControlTemplate x:Key="ValidationTemplate">
+        <DockPanel>
+            <TextBlock
+            Foreground="Red"
+            FontSize="20"><Run
+                Text="!" />
+            </TextBlock>
+            <AdornedElementPlaceholder />
+        </DockPanel>
+    </ControlTemplate>
+    
+    <Style x:Key="TextBoxInErrorStyle"
+    TargetType="{x:Type TextBox}">
+        <Style.Triggers>
+            <Trigger
+            Property="Validation.HasError"
+            Value="true">
+                <Setter
+                Property="ToolTip"
+                Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={x:Static RelativeSource.Self}}" />
+                <Setter
+                Property="Background"
+                Value="Red" />
+                <Setter
+                Property="Foreground"
+                Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- End Error Validation -->
+</ResourceDictionary>

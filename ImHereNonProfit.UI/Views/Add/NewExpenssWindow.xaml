@@ -1,0 +1,73 @@
+﻿<Window x:Class="ImHereNonProfit.UI.Views.Add.NewExpenssWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImHereNonProfit.UI.Views.Add" WindowStyle="SingleBorderWindow"
+        mc:Ignorable="d" d:DataContext="{Binding Source={StaticResource Locator}, Path=Mocks.MockNewExpenssVm}"
+        xmlns:utils="clr-namespace:ImHereNonProfit.UI.Utils"
+        Title="NewDonationWindow" Height="600" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="75*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="15*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding Title}" FontSize="30" 
+               VerticalAlignment="Bottom"/>
+        
+        <Button Grid.Column="2" Grid.Row="100" Width="100"  Content=" Add " Command="{Binding AddEntityCommand}"
+               VerticalAlignment="Center" Height="30" HorizontalAlignment="Right"/>
+        
+        <!-- Properties Controls  -->
+        
+        <!-- Date (DateTime) -->
+        <Label      Grid.Row="1" Grid.Column="1" 
+                    Content="Date" Style="{StaticResource StyleLabelGreenRegular}" />
+        <DatePicker Grid.Row="1" Grid.Column="2" FontSize="16" SelectedDate="{Binding Date, Mode=OneWayToSource, UpdateSourceTrigger=LostFocus}"/>
+
+        <!-- Amount (Int) -->
+        <Label      Grid.Row="2" Grid.Column="1" 
+                    Content="Amount" Style="{StaticResource StyleLabelGreenRegular}" />
+        <TextBox    Grid.Row="2" Grid.Column="2" FontSize="16" Style="{StaticResource TextBoxInErrorStyle}"
+                    Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <TextBox.Text>
+                <Binding Path="Amount" UpdateSourceTrigger="LostFocus" 
+                         ValidatesOnExceptions="True" Mode="TwoWay" >
+                <Binding.ValidationRules>
+                        <utils:IntegerValidationRule />
+                </Binding.ValidationRules>
+            </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <!-- Currency (String) -->
+        <Label      Grid.Row="3" Grid.Column="1" 
+                    Content="Currency" Style="{StaticResource StyleLabelGreenRegular}" />
+        <TextBox    Grid.Row="3" Grid.Column="2" FontSize="16" Text="{Binding Currency, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+        <!-- Description (String) -->
+        <Label      Grid.Row="4" Grid.Column="1" 
+                    Content="Description" Style="{StaticResource StyleLabelGreenRegular}" />
+        <TextBox    Grid.Row="4" Grid.Column="2" FontSize="16" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AppModelStoreContainer">
+    <EntitySet Name="Committees" EntityType="AppModel.Store.Committees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Donations" EntityType="AppModel.Store.Donations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommitteeActivities" EntityType="AppModel.Store.CommitteeActivities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommitteeReports" EntityType="AppModel.Store.CommitteeReports" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommitteeDocuments" EntityType="AppModel.Store.CommitteeDocuments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommitteeExpenses" EntityType="AppModel.Store.CommitteeExpenses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BasicUsers" EntityType="AppModel.Store.BasicUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BasicUsers_MemberUser" EntityType="AppModel.Store.BasicUsers_MemberUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BasicUsers_ExecutiveUser" EntityType="AppModel.Store.BasicUsers_ExecutiveUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MemberCommittee" EntityType="AppModel.Store.MemberCommittee" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CommiteeCommitteeActivity" Association="AppModel.Store.CommiteeCommitteeActivity">
+      <End Role="Commitee" EntitySet="Committees" />
+      <End Role="CommitteeActivity" EntitySet="CommitteeActivities" />
+    </AssociationSet>
+    <AssociationSet Name="CommitteeCommitteeReport" Association="AppModel.Store.CommitteeCommitteeReport">
+      <End Role="Committee" EntitySet="Committees" />
+      <End Role="CommitteeReport" EntitySet="CommitteeReports" />
+    </AssociationSet>
+    <AssociationSet Name="CommitteeCommitteeDocument" Association="AppModel.Store.CommitteeCommitteeDocument">
+      <End Role="Committee" EntitySet="Committees" />
+      <End Role="CommitteeDocument" EntitySet="CommitteeDocuments" />
+    </AssociationSet>
+    <AssociationSet Name="ExpensForCommittee" Association="AppModel.Store.ExpensForCommittee">
+      <End Role="Committee" EntitySet="Committees" />
+      <End Role="CommitteeExpens" EntitySet="CommitteeExpenses" />
+    </AssociationSet>
+    <AssociationSet Name="BasicUserDonation" Association="AppModel.Store.BasicUserDonation">
+      <End Role="BasicUser" EntitySet="BasicUsers" />
+      <End Role="Donation" EntitySet="Donations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberCommittee_Member" Association="AppModel.Store.FK_MemberCommittee_Member">
+      <End Role="Member" EntitySet="BasicUsers_MemberUser" />
+      <End Role="MemberCommittee" EntitySet="MemberCommittee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberCommittee_Committee" Association="AppModel.Store.FK_MemberCommittee_Committee">
+      <End Role="Committee" EntitySet="Committees" />
+      <End Role="MemberCommittee" EntitySet="MemberCommittee" />
+    </AssociationSet>
+    <AssociationSet Name="CommitteeChair" Association="AppModel.Store.CommitteeChair">
+      <End Role="ExecutiveUser" EntitySet="BasicUsers_ExecutiveUser" />
+      <End Role="Committee" EntitySet="Committees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberUser_inherits_BasicUser" Association="AppModel.Store.FK_MemberUser_inherits_BasicUser">
+      <End Role="BasicUser" EntitySet="BasicUsers" />
+      <End Role="MemberUser" EntitySet="BasicUsers_MemberUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExecutiveUser_inherits_MemberUser" Association="AppModel.Store.FK_ExecutiveUser_inherits_MemberUser">
+      <End Role="MemberUser" EntitySet="BasicUsers_MemberUser" />
+      <End Role="ExecutiveUser" EntitySet="BasicUsers_ExecutiveUser" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Committees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CurrentYearBudget" Type="int" Nullable="true" />
+    <Property Name="ChairId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Donations">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="BasicUserId" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BasicUserId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="Currency" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DonorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommitteeActivities">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CommiteeId" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CommiteeId" Type="int" Nullable="false" />
+    <Property Name="ActivityDate" Type="datetime" Nullable="false" />
+    <Property Name="ReportedDate" Type="datetime" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tags" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommitteeReports">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CommitteeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommitteeDocuments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CommitteeId" Type="int" Nullable="false" />
+    <Property Name="Tags" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommitteeExpenses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="Currency" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="CommitteeId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BasicUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserType" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Zipcode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BasicUsers_MemberUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BasicUsers_ExecutiveUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MemberCommittee">
+    <Key>
+      <PropertyRef Name="Members_Id" />
+      <PropertyRef Name="MemberOf_Id" />
+    </Key>
+    <Property Name="Members_Id" Type="int" Nullable="false" />
+    <Property Name="MemberOf_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CommiteeCommitteeActivity">
+    <End Role="Commitee" Type="AppModel.Store.Committees" Multiplicity="1" />
+    <End Role="CommitteeActivity" Type="AppModel.Store.CommitteeActivities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Commitee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommitteeActivity">
+        <PropertyRef Name="CommiteeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommitteeCommitteeReport">
+    <End Role="Committee" Type="AppModel.Store.Committees" Multiplicity="1" />
+    <End Role="CommitteeReport" Type="AppModel.Store.CommitteeReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Committee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommitteeReport">
+        <PropertyRef Name="CommitteeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommitteeCommitteeDocument">
+    <End Role="Committee" Type="AppModel.Store.Committees" Multiplicity="1" />
+    <End Role="CommitteeDocument" Type="AppModel.Store.CommitteeDocuments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Committee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommitteeDocument">
+        <PropertyRef Name="CommitteeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ExpensForCommittee">
+    <End Role="Committee" Type="AppModel.Store.Committees" Multiplicity="1" />
+    <End Role="CommitteeExpens" Type="AppModel.Store.CommitteeExpenses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Committee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommitteeExpens">
+        <PropertyRef Name="CommitteeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BasicUserDonation">
+    <End Role="BasicUser" Type="AppModel.Store.BasicUsers" Multiplicity="1" />
+    <End Role="Donation" Type="AppModel.Store.Donations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BasicUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Donation">
+        <PropertyRef Name="BasicUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommitteeChair">
+    <End Role="ExecutiveUser" Type="AppModel.Store.BasicUsers_ExecutiveUser" Multiplicity="1" />
+    <End Role="Committee" Type="AppModel.Store.Committees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExecutiveUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Committee">
+        <PropertyRef Name="ChairId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberCommittee_Member">
+    <End Role="Member" Type="AppModel.Store.BasicUsers_MemberUser" Multiplicity="1" />
+    <End Role="MemberCommittee" Type="AppModel.Store.MemberCommittee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberCommittee">
+        <PropertyRef Name="Members_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberCommittee_Committee">
+    <End Role="MemberCommittee" Type="AppModel.Store.MemberCommittee" Multiplicity="*" />
+    <End Role="Committee" Type="AppModel.Store.Committees" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Committee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberCommittee">
+        <PropertyRef Name="MemberOf_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberUser_inherits_BasicUser">
+    <End Role="BasicUser" Type="AppModel.Store.BasicUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberUser" Type="AppModel.Store.BasicUsers_MemberUser" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="BasicUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberUser">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExecutiveUser_inherits_MemberUser">
+    <End Role="MemberUser" Type="AppModel.Store.BasicUsers_MemberUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ExecutiveUser" Type="AppModel.Store.BasicUsers_ExecutiveUser" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="MemberUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExecutiveUser">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="AppModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="AppModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Committees" EntityType="AppModel.Committee" />
+          <EntitySet Name="Donations" EntityType="AppModel.Donation" />
+          <EntitySet Name="CommitteeActivities" EntityType="AppModel.CommitteeActivity" />
+          <AssociationSet Name="CommiteeCommitteeActivity" Association="AppModel.CommiteeCommitteeActivity">
+            <End Role="Commitee" EntitySet="Committees" />
+            <End Role="CommitteeActivity" EntitySet="CommitteeActivities" />
+          </AssociationSet>
+          <EntitySet Name="CommitteeReports" EntityType="AppModel.CommitteeReport" />
+          <AssociationSet Name="CommitteeCommitteeReport" Association="AppModel.CommitteeCommitteeReport">
+            <End Role="Committee" EntitySet="Committees" />
+            <End Role="CommitteeReport" EntitySet="CommitteeReports" />
+          </AssociationSet>
+          <EntitySet Name="CommitteeDocuments" EntityType="AppModel.CommitteeDocument" />
+          <AssociationSet Name="CommitteeCommitteeDocument" Association="AppModel.CommitteeCommitteeDocument">
+            <End Role="Committee" EntitySet="Committees" />
+            <End Role="CommitteeDocument" EntitySet="CommitteeDocuments" />
+          </AssociationSet>
+          <EntitySet Name="CommitteeExpenses" EntityType="AppModel.CommitteeExpens" />
+          <AssociationSet Name="ExpensForCommittee" Association="AppModel.ExpensForCommittee">
+            <End Role="Committee" EntitySet="Committees" />
+            <End Role="CommitteeExpens" EntitySet="CommitteeExpenses" />
+          </AssociationSet>
+          <EntitySet Name="BasicUsers" EntityType="AppModel.BasicUser" />
+          <AssociationSet Name="BasicUserDonation" Association="AppModel.BasicUserDonation">
+            <End Role="BasicUser" EntitySet="BasicUsers" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="MemberCommittee" Association="AppModel.MemberCommittee">
+            <End Role="Member" EntitySet="BasicUsers" />
+            <End Role="Committee" EntitySet="Committees" />
+          </AssociationSet>
+          <AssociationSet Name="CommitteeChair" Association="AppModel.CommitteeChair">
+            <End Role="ExecutiveUser" EntitySet="BasicUsers" />
+            <End Role="Committee" EntitySet="Committees" />
+          </AssociationSet>
+          </EntityContainer>
+        <EnumType Name="UsersTypes">
+          <Member Name="Donor" Value="0" />
+          <Member Name="Member" />
+          <Member Name="Executive" />
+        </EnumType>
+        <EntityType Name="Committee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="CurrentYearBudget" Type="Int32" Nullable="true" />
+		  <Property Name="ChairId" Type="Int32" Nullable="false" />
+		  <NavigationProperty Name="Activities" Relationship="AppModel.CommiteeCommitteeActivity" FromRole="Commitee" ToRole="CommitteeActivity" />
+          <NavigationProperty Name="CommitteeReports" Relationship="AppModel.CommitteeCommitteeReport" FromRole="Committee" ToRole="CommitteeReport" />
+          <NavigationProperty Name="CommitteeDocuments" Relationship="AppModel.CommitteeCommitteeDocument" FromRole="Committee" ToRole="CommitteeDocument" />
+          <NavigationProperty Name="CommitteeExpenses" Relationship="AppModel.ExpensForCommittee" FromRole="Committee" ToRole="CommitteeExpens" />
+          <NavigationProperty Name="Members" Relationship="AppModel.MemberCommittee" FromRole="Committee" ToRole="Member" />
+          <NavigationProperty Name="Chair" Relationship="AppModel.CommitteeChair" FromRole="Committee" ToRole="ExecutiveUser" />
+        </EntityType>
+        <EntityType Name="Donation">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="BasicUserId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+		  <Property Name="BasicUserId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Currency" Type="String" Nullable="false" />
+          <Property Name="DonorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Donor" Relationship="AppModel.BasicUserDonation" FromRole="Donation" ToRole="BasicUser" />
+        </EntityType>
+        <EntityType Name="CommitteeActivity">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CommiteeId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Commitee" Relationship="AppModel.CommiteeCommitteeActivity" FromRole="CommitteeActivity" ToRole="Commitee" />
+          <Property Name="CommiteeId" Type="Int32" Nullable="false" />
+          <Property Name="ActivityDate" Type="DateTime" Nullable="false" cg:SetterAccess="Public" />
+          <Property Name="ReportedDate" Type="DateTime" Nullable="false" ConcurrencyMode="None" />
+          <Property Name="Subject" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Tags" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CommiteeCommitteeActivity">
+          <End Type="AppModel.Committee" Role="Commitee" Multiplicity="1" />
+          <End Type="AppModel.CommitteeActivity" Role="CommitteeActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commitee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommitteeActivity">
+              <PropertyRef Name="CommiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CommitteeReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Committee" Relationship="AppModel.CommitteeCommitteeReport" FromRole="CommitteeReport" ToRole="Committee" />
+          <Property Name="CommitteeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CommitteeCommitteeReport">
+          <End Type="AppModel.Committee" Role="Committee" Multiplicity="1" />
+          <End Type="AppModel.CommitteeReport" Role="CommitteeReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Committee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommitteeReport">
+              <PropertyRef Name="CommitteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CommitteeDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Committee" Relationship="AppModel.CommitteeCommitteeDocument" FromRole="CommitteeDocument" ToRole="Committee" />
+          <Property Name="CommitteeId" Type="Int32" Nullable="false" />
+          <Property Name="Tags" Type="String" Nullable="false" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CommitteeCommitteeDocument">
+          <End Type="AppModel.Committee" Role="Committee" Multiplicity="1" />
+          <End Type="AppModel.CommitteeDocument" Role="CommitteeDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Committee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommitteeDocument">
+              <PropertyRef Name="CommitteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CommitteeExpens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Currency" Type="String" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ForCommittee" Relationship="AppModel.ExpensForCommittee" FromRole="CommitteeExpens" ToRole="Committee" />
+          <Property Name="CommitteeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="ExpensForCommittee">
+          <End Type="AppModel.Committee" Role="Committee" Multiplicity="1" />
+          <End Type="AppModel.CommitteeExpens" Role="CommitteeExpens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Committee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommitteeExpens">
+              <PropertyRef Name="CommitteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BasicUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserType" Type="AppModel.UsersTypes" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Zipcode" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" Unicode="true" />
+          <NavigationProperty Name="Donations" Relationship="AppModel.BasicUserDonation" FromRole="BasicUser" ToRole="Donation" />
+        </EntityType>
+        <EntityType Name="MemberUser" BaseType="AppModel.BasicUser" >
+          <NavigationProperty Name="MemberOf" Relationship="AppModel.MemberCommittee" FromRole="Member" ToRole="Committee" />
+        </EntityType>
+        <EntityType Name="ExecutiveUser" BaseType="AppModel.MemberUser" >
+          <NavigationProperty Name="ChairOf" Relationship="AppModel.CommitteeChair" FromRole="ExecutiveUser" ToRole="Committee" />
+        </EntityType>
+        <Association Name="BasicUserDonation">
+          <End Type="AppModel.BasicUser" Role="BasicUser" Multiplicity="1" />
+          <End Type="AppModel.Donation" Role="Donation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BasicUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Donation">
+              <PropertyRef Name="BasicUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MemberCommittee">
+          <End Type="AppModel.MemberUser" Role="Member" Multiplicity="*" />
+          <End Type="AppModel.Committee" Role="Committee" Multiplicity="*" />
+        </Association>
+        <Association Name="CommitteeChair">
+          <End Type="AppModel.ExecutiveUser" Role="ExecutiveUser" Multiplicity="1" />
+          <End Type="AppModel.Committee" Role="Committee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExecutiveUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Committee">
+              <PropertyRef Name="ChairId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AppModelStoreContainer" CdmEntityContainer="AppModelContainer">
+    <EntitySetMapping Name="Committees">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.Committee)">
+        <MappingFragment StoreEntitySet="Committees">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CurrentYearBudget" ColumnName="CurrentYearBudget" />
+          <ScalarProperty Name="ChairId" ColumnName="ChairId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Donations">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.Donation)">
+        <MappingFragment StoreEntitySet="Donations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BasicUserId" ColumnName="BasicUserId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="DonorId" ColumnName="DonorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommitteeActivities">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.CommitteeActivity)">
+        <MappingFragment StoreEntitySet="CommitteeActivities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CommiteeId" ColumnName="CommiteeId" />
+          <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+          <ScalarProperty Name="ReportedDate" ColumnName="ReportedDate" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommitteeReports">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.CommitteeReport)">
+        <MappingFragment StoreEntitySet="CommitteeReports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CommitteeId" ColumnName="CommitteeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommitteeDocuments">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.CommitteeDocument)">
+        <MappingFragment StoreEntitySet="CommitteeDocuments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CommitteeId" ColumnName="CommitteeId" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommitteeExpenses">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.CommitteeExpens)">
+        <MappingFragment StoreEntitySet="CommitteeExpenses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CommitteeId" ColumnName="CommitteeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BasicUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.BasicUser)">
+        <MappingFragment StoreEntitySet="BasicUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.MemberUser)">
+        <MappingFragment StoreEntitySet="BasicUsers_MemberUser">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(AppModel.ExecutiveUser)">
+        <MappingFragment StoreEntitySet="BasicUsers_ExecutiveUser">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MemberCommittee" TypeName="AppModel.MemberCommittee" StoreEntitySet="MemberCommittee">
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="Members_Id" />
+      </EndProperty>
+      <EndProperty Name="Committee">
+        <ScalarProperty Name="Id" ColumnName="MemberOf_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

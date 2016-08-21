@@ -1,0 +1,114 @@
+﻿<Page x:Class="ImHereNonProfit.UI.Views.ImHereMainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ImHereNonProfit.UI.Views"
+      mc:Ignorable="d" d:DataContext="{Binding Source={StaticResource Locator}, Path=ImHereMain}"
+      Height="600" Width="1000" Title="ImHereMainView" Background="{StaticResource BrushDefaultBackground}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="67*"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="66*"/>
+            <RowDefinition Height="93*"/>
+            <RowDefinition Height="107*"/>
+            <RowDefinition Height="33*"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- Committees Button -->
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding CommitteesLabel}" FontSize="25"
+               Visibility="{Binding Path=UserHasMemberPrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <Grid Row="2" RowSpan="4" Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" MaxHeight="50"/>
+            </Grid.RowDefinitions>
+            
+            <ListView Background="Transparent" Grid.Row="0"
+                  Visibility="{Binding Path=UserHasMemberPrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  SelectedItem="{Binding Path=SelectedCommittee, Mode=TwoWay}"
+                  ItemsSource="{Binding Path=UserCommitteeList}" Grid.RowSpan="2" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Grid.Row="1" Height="50" Background="{StaticResource BrushDefaultBackground}" 
+                    Content="+" FontSize="30" FontWeight="Bold" Command="{Binding AddCommitteeCommand}"
+                    Visibility="{Binding UserHasExecutivePrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
+
+        <Button Grid.Row="6" Grid.Column="1"  Command="{Binding NavigateToCommitteesCommand}" IsDefault="True" Background="Transparent"
+                Visibility="{Binding Path=UserHasMemberPrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Button.Content>
+                <Border Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Resources/Committee.jpg" />
+                    </Border.Background>
+                </Border>
+            </Button.Content>
+        </Button>
+
+        <!-- Donations Button -->
+        <Label Grid.Row="1" Grid.Column="3" Content="{Binding DonationsLabel}" FontSize="25"/>
+        <Button Grid.Row="2" Grid.Column="3" Command="{Binding NavigateToDonationsCommand}" Background="Transparent">
+            <Button.Content>
+                <Border Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Resources/donation.png" />
+                    </Border.Background>
+                </Border>
+            </Button.Content>
+        </Button>
+
+        <!-- Manage Button -->
+        <Label Grid.Row="4" Grid.Column="3" Content="{Binding UsersLabel}" FontSize="25" 
+                   Visibility="{Binding Path=UserHasMemberPrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Button Grid.Row="5" Grid.Column="3" Grid.RowSpan="2" Command="{Binding NavigateToManageCommand}" Background="Transparent"
+                   Visibility="{Binding Path=UserHasMemberPrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Button.Content>
+                <Border Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Resources/manage1.png" />
+                    </Border.Background>
+                </Border>
+            </Button.Content>
+        </Button>
+
+        <!-- Settings Button -->
+        <Label Grid.Row="4" Grid.Column="5" Content="Settings" FontSize="25" 
+                   Visibility="{Binding Path=UserHasExecutivePrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Button Grid.Row="5" Grid.Column="5"  Grid.RowSpan="2" Command="{Binding NavigateToSettingsCommand}" Background="Transparent"
+                   Visibility="{Binding Path=UserHasExecutivePrivlliges, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Button.Content>
+                <Border Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Resources/settings.png" />
+                    </Border.Background>
+                </Border>
+            </Button.Content>
+        </Button>
+
+    </Grid>
+</Page>
+

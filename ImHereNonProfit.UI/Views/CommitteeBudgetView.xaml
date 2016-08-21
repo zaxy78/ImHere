@@ -1,0 +1,85 @@
+﻿<Page x:Class="ImHereNonProfit.UI.Views.CommitteeBudgetView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImHereNonProfit.UI.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
+        mc:Ignorable="d" d:DataContext="{Binding Source={StaticResource Locator}, Path=Mocks.MockCommitteeBudget}"
+        Title="CommitteeBudgetView" Height="600" Width="1200" Background="{StaticResource BrushDefaultBackground}">
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="800*"/>
+            <ColumnDefinition Width="90*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="350*"/>
+        </Grid.RowDefinitions>
+        <!-- Budget Title -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="3">
+            <Label Content="{Binding BudgetTitle}" MinWidth="100"
+                   FontSize ="26" FontWeight="Bold" Margin="0,0,10,0" />
+            <Label Content="{Binding BudgetAmount}"
+                     FontSize ="26" />
+        </StackPanel>
+
+        <!-- Budget Details -->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Label Content="Total Expensses:" MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+                <Label Content="{Binding TotalExpensess}" FontSize ="20"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Left Resources: " MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+                <Label Content="{Binding LeftResources}" FontSize ="20"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Last Expenss: " MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+                <Label Content="{Binding LastExpens}" FontSize ="20"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- Expensses Title -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3">
+            <Label Content="Expensses Detailes:" MinWidth="100" FontSize ="26" FontWeight="Bold" Margin="0,0,10,0" />
+        </StackPanel>
+
+        <!-- Expensses Details -->
+        <DataGrid Grid.Row="3" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding ExpenssesList}" Margin="0,0,0,10"
+                  FontSize="18.667" RowBackground="White" AlternatingRowBackground="LightSteelBlue"  IsReadOnly="True" 
+                  SelectedItem="{Binding Path=SelectedExpens, Mode=TwoWay}" SelectionMode="Single" SelectionUnit="FullRow" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date Spent" Binding="{Binding Date, StringFormat=d}" MinWidth="100" />
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" MinWidth="75" />
+                <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" MinWidth="75" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- DataGrid Buttons -->
+        <Grid Grid.Row="3" Grid.Column="2" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Content="+" Padding="0,-10,0,0" FontSize="50" Background="Transparent" BorderThickness="3"
+                    Command="{Binding AddExpenssCommand}"/>
+            <Button Grid.Row="3" Content="-" Padding="0,-10,0,0" FontSize="50" Background="Transparent" BorderThickness="3"
+                    ToolTip="Only Executives can delete expensses"  ToolTipService.ShowOnDisabled="True"
+                    Command="{Binding RemoveExpenssCommand}" />
+        </Grid>
+
+    </Grid>
+</Page>

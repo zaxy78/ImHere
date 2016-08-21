@@ -1,0 +1,87 @@
+﻿<Page x:Class="ImHereNonProfit.UI.Views.UsersView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ImHereNonProfit.UI.Views"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+      xmlns:command="http://www.galasoft.ch/mvvmlight"
+      mc:Ignorable="d" d:DataContext="{Binding Source={StaticResource Locator}, Path=Mocks.MockUsersViewModel}"
+      Height="600" Width="1200"
+      Title="UsersView">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="40*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="70*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Label Content="Filter by user type: " MinWidth="250" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+                <ComboBox x:Name="mFilterTypeComboBox" MinWidth="250" Background="Transparent"  
+                          ItemsSource="{Binding UsersTypesList}" SelectedItem="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FilterUsersByTypeCommand}"
+                                                   CommandParameter="{Binding ElementName=mFilterTypeComboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" Grid.Column="1"  AutoGenerateColumns="False" ItemsSource="{Binding FilteredUsersList}" Margin="0,0,0,10"
+                  FontSize="18.667" RowBackground="White" AlternatingRowBackground="#4FCF2A"  IsReadOnly="True" 
+                  SelectedItem="{Binding Path=SelectedUser, Mode=TwoWay}" SelectionMode="Single" SelectionUnit="FullRow" >
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="#4BAB26"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" MinWidth="120" />
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" MinWidth="120" />
+                <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" MinWidth="120" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*" />
+                <DataGridTextColumn Header="Role" Binding="{Binding UserType}" Width="*" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel >
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" >
+                            <Label Width="Auto" Content="Address:  " MinWidth="120" />
+                            <Label Width="Auto" Content="{Binding Address}"/>
+                            <Label Width="Auto" Content="{Binding Zipcode}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        
+        <!-- DataGrid Buttons -->
+        <Grid Grid.Row="3" Grid.Column="2" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Content="+" Padding="0,-10,0,0" FontSize="50" Background="Transparent" BorderThickness="3"
+                    Command="{Binding AddUserCommand}"/>
+            <Button Grid.Row="3" Content="-" Padding="0,-10,0,0" FontSize="50" Background="Transparent" BorderThickness="3"
+                    ToolTip="Only Executives can delete expensses"  ToolTipService.ShowOnDisabled="True"
+                    Command="{Binding RemoveUserCommand}" />
+        </Grid>
+        
+    </Grid>
+</Page>

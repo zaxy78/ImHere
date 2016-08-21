@@ -1,0 +1,46 @@
+﻿<Window x:Class="ImHereNonProfit.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}" 
+        Title="MainWindow" WindowState="Maximized" Loaded="MainWindow_OnLoaded"
+        Height="800" Width="1000" Background="{StaticResource BrushDefaultBackground}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TopBar -->
+        <Grid  Grid.Row="0" Background="{StaticResource BrushDefaultBackground}" DataContext="{Binding Source={StaticResource Locator}, Path=TopBar}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="350*"/>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="1" Grid.Column="1" 
+                   Content="{Binding Title}" Style="{StaticResource StyleLabelGreenLarge}" />
+
+            <Button Grid.Row="1"  HorizontalAlignment="Left"  VerticalAlignment="Center" 
+                    ContentTemplate="{StaticResource TemplateButtonBack}" Background="Transparent" BorderBrush="Transparent"
+                    Command="{Binding AppGoBackCommand}" Margin="20,10,0,37" Visibility="{Binding Path=ShowGoBackButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <Border Grid.Row="2" Grid.ColumnSpan="3" Background="{StaticResource BrushImHereGreen}" />
+
+        </Grid>
+        <!-- MainAppFrame -->
+        <Frame Grid.Row="1" Grid.Column="0" Name="MainAppFrame" NavigationUIVisibility="Hidden"  Background="{StaticResource BrushDefaultBackground}"
+               Content="{Binding Path=CurrentPage, Mode=TwoWay}" 
+               VerticalAlignment="Center" HorizontalContentAlignment="Center">
+        </Frame>
+
+
+    </Grid>
+</Window>

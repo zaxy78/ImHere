@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29b7c41c32f64ce7951f917af83246da" Name="AppDiagram" ZoomLevel="74" >
+        <EntityTypeShape EntityType="AppModel.Committee" Width="2.25" PointX="5.375" PointY="4.25" />
+        <EntityTypeShape EntityType="AppModel.Donation" Width="1.5" PointX="5.5" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.CommitteeActivity" Width="1.75" PointX="9.125" PointY="3.25" />
+        <AssociationConnector Association="AppModel.CommiteeCommitteeActivity" />
+        <EntityTypeShape EntityType="AppModel.CommitteeReport" Width="1.875" PointX="1" PointY="8.625" IsExpanded="true" />
+        <AssociationConnector Association="AppModel.CommitteeCommitteeReport" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="AppModel.CommitteeDocument" Width="1.875" PointX="9.125" PointY="6.125" />
+        <AssociationConnector Association="AppModel.CommitteeCommitteeDocument" />
+        <AssociationConnector Association="AppModel.MemberCommitteeActivity" />
+        <EntityTypeShape EntityType="AppModel.CommitteeExpens" Width="2" PointX="11.75" PointY="3.25" />
+        <AssociationConnector Association="AppModel.ExpensForCommittee" />
+        <EntityTypeShape EntityType="AppModel.BasicUser" Width="1.5" PointX="1.875" PointY="0.625" />
+        <EntityTypeShape EntityType="AppModel.MemberUser" Width="1.5" PointX="1.875" PointY="4.5" />
+        <InheritanceConnector EntityType="AppModel.MemberUser" />
+        <EntityTypeShape EntityType="AppModel.ExecutiveUser" Width="1.5" PointX="1.875" PointY="6.25" />
+        <InheritanceConnector EntityType="AppModel.ExecutiveUser" />
+        <AssociationConnector Association="AppModel.BasicUserDonation" />
+        <AssociationConnector Association="AppModel.MemberCommittee" />
+        <AssociationConnector Association="AppModel.CommitteeChair" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

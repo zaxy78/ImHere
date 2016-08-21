@@ -1,0 +1,107 @@
+﻿<Page x:Class="ImHereNonProfit.UI.Views.CommitteeManageView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImHereNonProfit.UI.Views"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
+        mc:Ignorable="d" d:DataContext="{Binding Source={StaticResource Locator}, Path=Mocks.MockCommitteeManage}"
+        Title="CommitteeManageView" Height="600" Width="1200" Background="{StaticResource BrushDefaultBackground}">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="800*"/>
+            <ColumnDefinition Width="90*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="350*"/>
+        </Grid.RowDefinitions>
+
+        
+        
+        <!-- Manage Title -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="3">
+            <Label Content="{Binding ManageSubTitle}" MinWidth="100"
+                   FontSize ="26" FontWeight="Bold" Margin="0,0,10,0" />
+        </StackPanel>
+
+
+        <!-- Manage Details -->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Label Content="Chair person:" MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+                <Label Content="{Binding ChairDetails}" FontSize ="20"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Total Members:" MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+                <Label Content="{Binding TotalMembers}" FontSize ="20"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                <Label Content="Commitee Budget:  " MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"/>
+
+
+                <TextBox Background="Transparent" Text="{Binding CommitteeBudgetText, Mode=TwoWay}" IsEnabled="{Binding UserHasExecutivePrivlliges}" 
+                                         MinWidth="200" FontSize ="20" FontWeight="Bold" Margin="0,0,10,0"  TextAlignment="Center"/>
+
+                <Button Width="150" FontSize ="20" HorizontalAlignment="Center"
+                              ToolTip="Only Executives can update budget"  ToolTipService.ShowOnDisabled="True"
+                              Command="{Binding SetBudgetCommand}" Background="Transparent" Content="Update Budget">
+                   
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Members List Title -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3">
+            <Label Content="Committee Members :" MinWidth="100" FontSize ="26" FontWeight="Bold" Margin="0,0,10,0" />
+        </StackPanel>
+
+        <!-- Members Details -->
+        <DataGrid Grid.Row="3" AutoGenerateColumns="False" ItemsSource="{Binding MembersList}" Margin="0,0,0,10"
+                  FontSize="18.667" RowBackground="White" AlternatingRowBackground="LightSteelBlue"  IsReadOnly="True" Grid.Column="1" 
+                  SelectedItem="{Binding Path=SelectedMember, Mode=TwoWay}" SelectionMode="Single" SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"  />
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" MinWidth="200" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" MinWidth="150" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel >
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" >
+                            <Label Width="Auto" Content="Address:  " MinWidth="120" />
+                            <Label Width="Auto" Content="{Binding Address}"/>
+                            <Label Width="Auto" Content="{Binding Zipcode}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+
+        <!-- DataGrid Buttons -->
+        <Grid Grid.Row="3" Grid.Column="2" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Content="+" Padding="0,-10,0,0" FontSize="50" Background="Transparent" BorderThickness="3"
+                    ToolTip="Only Executives can add\remove members"  ToolTipService.ShowOnDisabled="True"
+                    Command="{Binding AddUserCommand}"/>
+
+            <Button Grid.Row="3" Content="-" Padding="0,-10,0,0" FontSize="50" Background="Transparent" BorderThickness="3"
+                    ToolTip="Only Executives can add\remove members"  ToolTipService.ShowOnDisabled="True"
+                    Command="{Binding RemoveUserCommand}" />
+        </Grid>
+
+    </Grid>
+</Page>
+

@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+    <!--  Brushes -->
+
+    <SolidColorBrush x:Key="BrushLightGrayColor"
+                     Color="#c7c8ca" />
+    <SolidColorBrush x:Key="BrushDarkGrayColor"
+                     Color="#969696" />
+    <SolidColorBrush x:Key="BrushImHereGreen"
+                     Color="#4BAB26" />
+    <SolidColorBrush x:Key="BrushDefaultBackground"
+                     Color="#F8F8F8" />
+    <!-- End Brushes -->
+
+    <!-- LabelGreenRegular -->
+    <Style x:Key="StyleLabelGreenRegular"
+           TargetType="{x:Type Label}">
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="FontFamily"
+                Value="Ariel" />
+        <Setter Property="FontSize"
+                Value="20" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BrushImHereGreen}" />
+    </Style>
+    <!-- End LabelGreenRegular -->
+
+
+    <!-- LabelGreenLarge -->
+    <Style x:Key="StyleLabelGreenLarge"
+           TargetType="{x:Type Label}">
+        <Setter Property="FontFamily"
+                Value="Ariel" />
+        <Setter Property="FontSize"
+                Value="50" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BrushImHereGreen}" />
+    </Style>
+    <!-- End LabelGreenLarge -->
+
+    <!-- LabelGreenLarge -->
+    <Style x:Key="StyleLabelGreenHuge"
+           TargetType="{x:Type Label}">
+        <Setter Property="FontFamily"
+                Value="Ariel" />
+        <Setter Property="FontSize"
+                Value="70" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BrushImHereGreen}" />
+    </Style>
+    <!-- End LabelGreenLarge -->
+
+
+
+</ResourceDictionary>
